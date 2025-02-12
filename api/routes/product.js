@@ -4,6 +4,11 @@ const Product = require("../model/product");
 const checkAuth = require('../middleware/check-auth')
 const mongoose = require("mongoose");
 
+router.get("/products", async (req, res) => {
+  const { search } = req.query;
+  let products = await Product.find({ title: new RegExp(search, "i") }); // Case-insensitive search
+  res.json({ products });
+});
 router.get("/",(req, res, next) => {
   Product.find()
     .then((result) => {
@@ -40,7 +45,9 @@ router.post("/", (req, res, next) => {
     _id:new mongoose.Types.ObjectId(),
     code:req.body.code,
     title:req.body.title,
-    description:req.body.description,
+    shortdescription:req.body.shortdescription,
+    ingredients:req.body.ingredients,
+    benefits:req.body.benefits,
     mrp:req.body.mrp,
     sp:req.body.sp,
     discountPercent:req.body.discountPercent,
@@ -107,5 +114,7 @@ router.put("/:id", (req, res, next) => {
     });
   });
 });
+
+
 
 module.exports = router;
