@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "rest api",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "dev": "nodemon server",
-    "client": "npm run start --prefix ../client/my-app",
-    "build": "concurrently --kill-other-on-fail \"npm run server\"npm run client\""
-  },
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "node server",
+  "dev": "nodemon server",
+  "client": "npm run start --prefix ../client/my-app",
+  "build": "concurrently --kill-other-on-fail 'npm run server' 'npm run client'"
+}
+,
   "author": "kristiana trupja",
   "license": "ISC",
   "dependencies": {
@@ -21,5 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
