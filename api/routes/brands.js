@@ -3,7 +3,6 @@ const router = express.Router();
 const Brands = require("../model/brands");
 const mongoose = require("mongoose");
 
-
 router.post('/',async(req,res)=>{
 const {title,description,image}= req.body;
 try{

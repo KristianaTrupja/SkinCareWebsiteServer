@@ -4,31 +4,26 @@ const Product = require("../model/product");
 const checkAuth = require('../middleware/check-auth')
 const mongoose = require("mongoose");
 
-router.get("/products", async (req, res) => {
+router.get("/accessories", async (req, res) => {
   const { search } = req.query;
   let products = await Product.find({ title: new RegExp(search, "i") }); // Case-insensitive search
   res.json({ products });
 });
-router.get("/", async (req, res, next) => {
-  try {
-    const page = parseInt(req.query.page) || 1; // Default page is 1
-    const limit = parseInt(req.query.limit) || 12; // Default limit is 8 products per page
-    const skip = (page - 1) * limit; 
 
-    const totalProducts = await Product.countDocuments(); // Get total product count
-    const products = await Product.find().skip(skip).limit(limit);
-    res.status(200).json({
-      totalPages: Math.ceil(totalProducts / limit),
-      currentPage: page,
-      totalProducts,
-      products
+router.get("/",(req, res, next) => {
+  Product.find({category: "Accessories"})
+    .then((result) => {
+      res.status(200).json({
+        productData: result,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
 });
-
 
 router.get("/:id", (req, res, next) => {
   console.log(req.params.id);
@@ -122,7 +117,4 @@ router.put("/:id", (req, res, next) => {
     });
   });
 });
-
-
-
-module.exports = router;
+module.exports = router
