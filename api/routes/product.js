@@ -23,10 +23,12 @@ router.get("/", async (req, res, next) => {
       totalProducts,
       products
     });
+    console.log(totalProducts,products,skip,limit,"totalProducts,products,skip,limit")
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
   }
+
 });
 
 
